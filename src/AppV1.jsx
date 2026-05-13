@@ -183,57 +183,37 @@ const whoFor = [
   { icon: 'automation', title: 'Специалист', desc: 'Автоматизировать рутину через AI — освободить 20+ часов в неделю.' },
 ];
 
-/* PRICING — 3 тарифа */
+/* PRICING — переписано по правкам */
 const pricing = [
   {
     tier: '// БАЗОВЫЙ',
     name: 'Записи',
-    price: '10 990',
-    meta: '// 2 блока · разовая покупка',
+    price: '9 990',
+    meta: '// один раз, доступ на год',
     features: [
-      { text: '2 блока курса (12 уроков)', strong: true },
-      { text: 'Блок 01 — AI-старт' },
-      { text: 'Блок 02 — Вайб-кодинг: сайты' },
+      { text: '4 блока курса (без 5-го)', strong: true },
+      { text: '23 урока: AI-старт, сайты, боты, MVP' },
       { text: 'Библиотека 200+ промптов' },
       { text: 'Закрытый чат с учениками' },
-      { text: 'Доступ на 1 год' },
-      { text: 'Блок 03 — боты и автоматизация', dim: true },
-      { text: 'Блок 04 — свои сервисы и MVP', dim: true },
-      { text: 'Блок 05 — продажи и клиенты', dim: true },
+      { text: 'Доступ к материалам на 1 год' },
+      { text: 'Шаблоны лендингов, КП, договоров', dim: true },
+      { text: 'Бесплатные обновления курса', dim: true },
+      { text: 'Блок «Деньги»: продажи и клиенты', dim: true },
       { text: 'Личная работа с Адамом', dim: true },
     ],
     cta: 'Взять записи',
   },
   {
-    tier: '// ПРАКТИК',
-    name: 'Практик',
-    price: '15 990',
-    meta: '// 4 блока · разовая покупка',
-    features: [
-      { text: '4 блока курса (23 урока)', strong: true },
-      { text: 'Блок 01 — AI-старт' },
-      { text: 'Блок 02 — Вайб-кодинг: сайты' },
-      { text: 'Блок 03 — Боты и автоматизация', highlight: true },
-      { text: 'Блок 04 — Свои сервисы и MVP', highlight: true },
-      { text: 'Библиотека 200+ промптов' },
-      { text: 'Закрытый чат с учениками' },
-      { text: 'Доступ на 1 год' },
-      { text: 'Блок 05 — продажи и клиенты', dim: true },
-      { text: 'Личная работа с Адамом', dim: true },
-    ],
-    cta: 'Взять курс',
-  },
-  {
     tier: '// С НАСТАВНИЧЕСТВОМ',
     name: 'Лично с Адамом',
     price: '100 000',
-    meta: '// все 5 блоков + поддержка',
+    meta: '// 7 недель + поддержка до результата',
     badge: '★ только 15 мест',
     spots: 'осталось 7 из 15',
     featured: true,
     features: [
-      { text: 'Все 5 блоков (30+ уроков)', strong: true },
-      { text: 'Блок 05 — Деньги: продажи, клиенты, КП', strong: true, highlight: true },
+      { text: 'Все 5 блоков курса (30+ уроков)', strong: true },
+      { text: 'Блок «Деньги»: продажи, клиенты, КП', strong: true, highlight: true },
       { text: 'Шаблоны лендингов, КП, договоров', highlight: true },
       { text: '8 групповых созвонов с Адамом', strong: true },
       { text: 'Личный чат на 2 месяца', strong: true },
@@ -244,40 +224,6 @@ const pricing = [
       { text: 'Сообщество выпускников пожизненно', strong: true },
     ],
     cta: 'Занять место',
-  },
-];
-
-/* PROBLEM SYMPTOMS — категорированный список */
-const problemItems = [
-  {
-    num: '01',
-    tag: 'шум',
-    title: 'Везде кричат: «AI — это золото»',
-    body: 'Сотни каналов, тысячи постов: «успей войти», «AI заменит всех». Звучит угрожающе, но непонятно, что конкретно с этим делать тебе.',
-  },
-  {
-    num: '02',
-    tag: 'туториалы',
-    title: 'ChatGPT пишет «как-то так»',
-    body: 'Ты пробовал. Сохранил 50 туториалов в закладки. Не открыл ни один. Промпты получаются средние, результат — на троечку.',
-  },
-  {
-    num: '03',
-    tag: 'долго',
-    title: '3 года в IT — это нереально',
-    body: 'Думал: «надо вкатиться в программирование». Курсы, алгоритмы, собесы. Полтора-три года на джуна. Время уходит.',
-  },
-  {
-    num: '04',
-    tag: 'зависть',
-    title: 'Школьники зарабатывают больше',
-    body: 'Школьники собирают сайты через AI за час — продают по 50 000 ₽. Фрилансеры берут 100 000 ₽ за бота. А ты пока «учишь матчасть».',
-  },
-  {
-    num: '05',
-    tag: 'страх',
-    title: 'Уже поздно?',
-    body: 'Кажется, поезд ушёл. Все вокруг что-то делают, ты — нет. Тебе стыдно начинать с нуля «в этом возрасте». Это нормально. Я через это прошёл.',
   },
 ];
 
@@ -871,27 +817,26 @@ function Problem() {
           → если хотя бы одно из ниже попало в точку — этот курс для тебя
         </motion.div>
 
-        <div className="news-items">
-          {problemItems.map((it, i) => (
-            <motion.div
-              key={it.num}
-              className="news-item"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.5, delay: 0.15 + i * 0.07 }}
-            >
-              <div className="news-item-left">
-                <span className="news-item-num">{it.num}</span>
-                <span className="news-item-tag">// {it.tag}</span>
-              </div>
-              <div className="news-item-right">
-                <h3 className="news-item-title">{it.title}</h3>
-                <p className="news-item-body">{it.body}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          className="news-body"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          <p className="news-drop">
+            <span className="dropcap">Т</span>ы слышишь со всех сторон: «AI заменит всех», «успей войти в AI». Тысячи каналов кричат, что это золотая жила. Ты пробовал ChatGPT — он пишет «как-то так». Ты сохранил 50 туториалов — не открыл ни один. Ты думал «надо вкатиться в IT», но три года учиться программированию?
+          </p>
+          <p>
+            А время идёт. Каждый день кто-то закрывает первого клиента, пока ты гуглишь «что такое нейросеть». И этот кто-то — не сеньор из Яндекса, а 19-летний на удалёнке.
+          </p>
+          <p>
+            Школьники собирают сайты через AI за час и продают по 50 000 ₽. Фрилансеры делают AI-ботов и поднимают по 100 000 ₽ с одного клиента. Ребята твоего возраста запускают свои сервисы за выходные.
+          </p>
+          <p>
+            А ты до сих пор думаешь, что для этого нужен код. Не понимаешь, с чего начать. Боишься, что уже поздно. Это нормально. Я через это прошёл.
+          </p>
+        </motion.div>
 
         <motion.aside
           className="news-pull"
@@ -1403,25 +1348,25 @@ function Footer() {
 }
 
 /* ============================================================
-   VERSION BADGE
+   VERSION BADGE — v1 → switch to v2
    ============================================================ */
 
 function VersionBadge() {
   return (
-    <a className="version-badge interactive" href="#v1">
+    <a className="version-badge interactive" href="#">
       <span className="vb-tag">version</span>
-      <span className="vb-name">v2.0</span>
+      <span className="vb-name">v1.0</span>
       <span className="vb-sep">/</span>
-      <span className="vb-switch">→ v1</span>
+      <span className="vb-switch">→ v2</span>
     </a>
   );
 }
 
 /* ============================================================
-   APP
+   APP V1
    ============================================================ */
 
-export default function App() {
+export default function AppV1() {
   return (
     <>
       <Cursor />
