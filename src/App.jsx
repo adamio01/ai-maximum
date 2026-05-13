@@ -462,6 +462,7 @@ function Nav() {
           <li><a href="#program">/программа</a></li>
           <li><a href="#portfolio">/портфолио</a></li>
           <li><a href="#pricing">/тарифы</a></li>
+          <li><a href="guide.html" className="nav-guide">/гайд<span className="nav-new">new</span></a></li>
         </ul>
         <Magnetic strength={0.2}>
           <a href="#pricing" className="nav-cta">

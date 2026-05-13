@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Вайб-кодинг с нуля — гайд от Адама Алиева</title>
+<meta name="description" content="Как войти в вайб-кодинг, освоить инструменты AI и начать зарабатывать от 50 000 ₽ с первого проекта. Без воды, простым языком.">
+<meta name="theme-color" content="#f4f1e8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1e8;--bg-alt:#ece8db;--paper:#ffffff;
+  --ink:#0a0a0a;--ink-dim:#4a4a4a;--ink-mute:#8a8a8a;
+  --line:rgba(10,10,10,.1);--line-2:rgba(10,10,10,.18);
+  --acid:#d4ff00;--acid-deep:#9bc000;--red:#ff4d3d;
+  --mono:'JetBrains Mono',monospace;--sans:'Inter',sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--acid);color:var(--ink)}
+mark{background:var(--acid);color:var(--ink);padding:0 .15em;border-radius:3px}
+a{color:var(--ink)}
+
+.container{max-width:880px;margin:0 auto;padding:0 32px}
+@media(max-width:640px){.container{padding:0 20px}}
+
+/* ============ NAV ============ */
+.nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(244,241,232,.85);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding:14px 0;
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;padding:0 32px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.logo{
+  font-family:var(--mono);font-size:14px;font-weight:700;
+  text-decoration:none;color:var(--ink);
+}
+.logo-bracket{color:var(--acid-deep);font-weight:500}
+.nav-back{
+  font-family:var(--mono);font-size:13px;text-decoration:none;
+  color:var(--ink-dim);padding:8px 14px;border:1px solid var(--line-2);
+  border-radius:100px;transition:all .25s;
+}
+.nav-back:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* ============ MASTHEAD ============ */
+.masthead{padding:80px 0 40px;text-align:center}
+.mh-tag{
+  display:inline-flex;align-items:center;gap:10px;padding:8px 14px;
+  background:var(--paper);border:1px solid var(--line-2);
+  border-radius:100px;font-family:var(--mono);font-size:12px;
+  color:var(--ink-dim);margin-bottom:32px;
+}
+.mh-dot{width:7px;height:7px;background:var(--acid);border-radius:50%;
+  box-shadow:0 0 0 0 rgba(212,255,0,.6);animation:live 1.8s infinite;
+}
+@keyframes live{
+  0%{box-shadow:0 0 0 0 rgba(212,255,0,.7)}
+  70%{box-shadow:0 0 0 8px rgba(212,255,0,0)}
+  100%{box-shadow:0 0 0 0 rgba(212,255,0,0)}
+}
+.mh-h1{
+  font-family:var(--mono);
+  font-size:clamp(38px,6vw,76px);
+  font-weight:800;line-height:.95;letter-spacing:-.04em;
+  text-transform:uppercase;margin-bottom:28px;
+}
+.mh-h1 .em{
+  background:var(--acid);color:var(--ink);
+  padding:0 .12em;border-radius:6px;
+  display:inline-block;transform:rotate(-1deg);
+}
+.mh-sub{
+  font-family:var(--sans);font-size:clamp(17px,1.7vw,21px);
+  color:var(--ink-dim);max-width:640px;margin:0 auto 40px;line-height:1.55;
+}
+.mh-meta{
+  display:flex;justify-content:center;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12px;color:var(--ink-mute);
+  flex-wrap:wrap;
+}
+.mh-meta .sep{color:var(--line-2)}
+
+/* ============ TOC ============ */
+.toc{
+  margin:60px auto 80px;padding:32px;
+  background:var(--paper);border:1.5px solid var(--ink);
+  border-radius:18px;box-shadow:6px 6px 0 0 rgba(10,10,10,.08);
+}
+.toc-title{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  color:var(--ink-mute);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:20px;display:flex;align-items:center;gap:10px;
+}
+.toc-title::after{content:'';flex:1;height:1px;background:var(--line);}
+.toc-list{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}
+.toc-list a{
+  display:flex;gap:14px;padding:6px 0;
+  font-family:var(--mono);font-size:14px;color:var(--ink-dim);
+  text-decoration:none;transition:color .2s;align-items:baseline;
+}
+.toc-list a:hover{color:var(--ink)}
+.toc-list .num{color:var(--acid-deep);font-weight:700;flex:0 0 26px}
+@media(max-width:640px){.toc-list{grid-template-columns:1fr}}
+
+/* ============ ARTICLE ============ */
+article{padding-bottom:80px}
+section{padding:50px 0;border-top:1px dashed var(--line-2);scroll-margin-top:80px}
+section:first-of-type{border-top:none;padding-top:20px}
+.sec-num{
+  display:inline-block;padding:4px 12px;background:var(--ink);color:var(--bg);
+  font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.05em;
+  border-radius:100px;margin-bottom:18px;
+}
+h2{
+  font-family:var(--mono);font-size:clamp(26px,3.6vw,40px);
+  font-weight:800;line-height:1.1;letter-spacing:-.03em;
+  margin-bottom:24px;text-transform:uppercase;
+}
+h3{
+  font-family:var(--mono);font-size:20px;font-weight:700;
+  letter-spacing:-.02em;margin:28px 0 12px;
+}
+p{
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  color:var(--ink-dim);margin-bottom:18px;
+}
+p strong, p b{color:var(--ink);font-weight:600}
+em{font-style:italic}
+
+ul,ol{margin:18px 0 24px;padding-left:0;list-style:none}
+ul li, ol li{
+  font-family:var(--sans);font-size:16px;line-height:1.65;
+  color:var(--ink-dim);padding-left:28px;position:relative;margin-bottom:10px;
+}
+ul li::before{
+  content:'→';position:absolute;left:0;color:var(--acid-deep);
+  font-family:var(--mono);font-weight:700;
+}
+ol{counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{
+  content:counter(n,decimal-leading-zero);position:absolute;left:0;
+  font-family:var(--mono);font-size:13px;font-weight:700;color:var(--acid-deep);
+  top:1px;
+}
+
+/* code-like prompt block */
+.prompt{
+  margin:24px 0;padding:20px 24px;background:var(--ink);color:#e8e8e0;
+  border-radius:12px;font-family:var(--mono);font-size:14px;line-height:1.6;
+  position:relative;overflow:hidden;
+}
+.prompt::before{
+  content:attr(data-label);display:block;font-size:10px;color:var(--acid);
+  letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;
+  padding-bottom:8px;border-bottom:1px dashed rgba(255,255,255,.15);
+}
+.prompt-arrow{color:var(--acid);font-weight:700}
+
+/* tip / warning callout */
+.tip,.warn{
+  display:grid;grid-template-columns:48px 1fr;gap:16px;
+  margin:24px 0;padding:20px 22px;border-radius:12px;
+  border:1.5px solid var(--ink);
+}
+.tip{background:rgba(212,255,0,.18);border-color:var(--ink)}
+.warn{background:rgba(255,77,61,.08);border-color:var(--red)}
+.tip-icon,.warn-icon{
+  font-family:var(--mono);font-size:24px;font-weight:800;line-height:1;
+  width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  border-radius:10px;
+}
+.tip-icon{background:var(--acid);color:var(--ink)}
+.warn-icon{background:var(--red);color:var(--paper)}
+.tip strong,.warn strong{
+  display:block;font-family:var(--mono);text-transform:uppercase;font-size:11px;
+  letter-spacing:.1em;margin-bottom:6px;color:var(--ink);
+}
+.tip p,.warn p{margin:0;font-size:15px;color:var(--ink)}
+
+/* pull quote */
+.pull{
+  margin:36px 0;padding:32px;border-top:3px solid var(--ink);
+  border-bottom:3px solid var(--ink);
+  font-family:var(--mono);font-size:clamp(20px,2.4vw,26px);
+  font-weight:700;line-height:1.3;letter-spacing:-.02em;text-align:center;
+}
+.pull-mark{display:block;font-size:48px;color:var(--acid-deep);line-height:.5;margin-bottom:8px}
+.pull-sign{display:block;margin-top:14px;font-size:12px;color:var(--ink-mute);
+  font-weight:500;letter-spacing:.05em;font-style:italic;
+}
+
+/* checklist styled list */
+.check-list{margin:24px 0}
+.check-list li{padding-left:34px}
+.check-list li::before{
+  content:'✓';color:var(--ink);background:var(--acid);
+  width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;border:1.5px solid var(--ink);
+  top:2px;left:0;
+}
+
+/* "do / don't" compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+.compare-card{padding:20px;border:1.5px solid var(--ink);border-radius:12px;background:var(--paper)}
+.compare-card.bad{background:var(--bg-alt)}
+.compare-card.good{background:rgba(212,255,0,.15)}
+.compare-tag{
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px;
+}
+.compare-card.good .compare-tag{color:var(--acid-deep)}
+.compare-card.bad .compare-tag{color:var(--red)}
+.compare-card p{margin:0;color:var(--ink);font-size:15px;line-height:1.5}
+@media(max-width:600px){.compare{grid-template-columns:1fr}}
+
+/* table for prices */
+.table{
+  margin:24px 0;border:1.5px solid var(--ink);border-radius:14px;
+  overflow:hidden;background:var(--paper);
+}
+.table-row{
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:16px 22px;
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:14px;
+}
+.table-row:last-child{border-bottom:none}
+.table-row.head{background:var(--ink);color:var(--bg);font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;}
+.table-row .v{font-weight:700}
+.table-row .v.lime{background:var(--acid);color:var(--ink);
+  padding:2px 8px;border-radius:4px;width:fit-content}
+@media(max-width:600px){.table-row{grid-template-columns:1fr;gap:6px;padding:14px 18px}.table-row.head{display:none}.table-row>div{display:flex;justify-content:space-between;font-size:13px}}
+
+/* ============ CTA FINAL ============ */
+.cta-final{
+  margin:60px 0 0;padding:48px;background:var(--ink);color:var(--bg);
+  border-radius:22px;text-align:center;position:relative;overflow:hidden;
+}
+.cta-final h3{
+  font-family:var(--mono);font-size:clamp(28px,4vw,44px);font-weight:800;
+  line-height:1.05;letter-spacing:-.035em;color:var(--bg);margin-bottom:18px;
+  text-transform:uppercase;
+}
+.cta-final h3 mark{background:var(--acid);color:var(--ink);padding:0 .12em;border-radius:5px}
+.cta-final p{color:rgba(255,255,255,.7);margin:0 auto 28px;max-width:480px;font-size:16px}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:18px 30px;
+  background:var(--acid);color:var(--ink);text-decoration:none;
+  font-family:var(--mono);font-size:15px;font-weight:700;
+  border-radius:100px;border:1.5px solid var(--acid);
+  transition:all .25s;
+}
+.cta-btn:hover{background:var(--bg);border-color:var(--bg);
+  transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 var(--acid)}
+.cta-btn .arr{transition:transform .3s}
+.cta-btn:hover .arr{transform:translateX(4px)}
+
+/* ============ FOOTER ============ */
+footer{
+  padding:40px 0;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:12px;color:var(--ink-mute);
+}
+.foot-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot-inner a{color:var(--ink-dim);text-decoration:none}
+.foot-inner a:hover{color:var(--ink)}
+
+@media(max-width:640px){
+  .masthead{padding:50px 0 24px}
+  .toc{padding:24px;margin:40px 0 60px}
+  .cta-final{padding:32px}
+  .prompt{padding:16px 18px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/ai-maximum/" class="logo">
+      <span class="logo-bracket">[</span>ai/max<span class="logo-bracket">]</span>
+    </a>
+    <a href="/ai-maximum/" class="nav-back">← на главную</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mh-tag">
+    <span class="mh-dot"></span>
+    // гайд · от адама алиева · 2026
+  </div>
+  <h1 class="mh-h1">
+    Вайб-кодинг<br>
+    <span class="em">с нуля</span>
+  </h1>
+  <p class="mh-sub">
+    Как войти в новую профессию, освоить нейросети и начать зарабатывать от 50 000 ₽ с первого проекта.
+    Простым языком. Без терминов. С примерами промптов.
+  </p>
+  <div class="mh-meta">
+    <span>≈ 15 мин чтения</span>
+    <span class="sep">·</span>
+    <span>13 разделов</span>
+    <span class="sep">·</span>
+    <span>сохрани в закладки</span>
+  </div>
+</header>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-title">оглавление</div>
+  <ul class="toc-list">
+    <li><a href="#s1"><span class="num">01</span> Что такое вайб-кодинг</a></li>
+    <li><a href="#s2"><span class="num">02</span> Главный сдвиг 2024–2026</a></li>
+    <li><a href="#s3"><span class="num">03</span> Что тебе понадобится</a></li>
+    <li><a href="#s4"><span class="num">04</span> Первые 7 дней</a></li>
+    <li><a href="#s5"><span class="num">05</span> Стек инструментов</a></li>
+    <li><a href="#s6"><span class="num">06</span> Как разговаривать с AI</a></li>
+    <li><a href="#s7"><span class="num">07</span> Лендинг за один вечер</a></li>
+    <li><a href="#s8"><span class="num">08</span> Второй проект — бот</a></li>
+    <li><a href="#s9"><span class="num">09</span> Третий уровень — n8n</a></li>
+    <li><a href="#s10"><span class="num">10</span> Где брать клиентов</a></li>
+    <li><a href="#s11"><span class="num">11</span> Сколько брать денег</a></li>
+    <li><a href="#s12"><span class="num">12</span> Ошибки новичков</a></li>
+    <li><a href="#s13"><span class="num">13</span> Что дальше</a></li>
+  </ul>
+</div>
+
+<!-- ============ ARTICLE ============ -->
+<article>
+
+<section id="s1">
+  <span class="sec-num">01 / основа</span>
+  <h2>Что такое вайб-кодинг</h2>
+  <p>
+    Вайб-кодинг — это когда ты не пишешь код руками, а <strong>описываешь нейросети что хочешь получить</strong>. Простым человеческим языком. А она пишет код за тебя.
+  </p>
+  <p>
+    Ты говоришь: <em>«сделай мне лендинг для курса по психологии, с формой заявки, в тёмной теме, шрифт Inter»</em>. AI выдаёт готовую страницу. Ты говоришь: <em>«поменяй цвет кнопки на оранжевый и добавь блок с отзывами»</em>. AI меняет. Через 2–3 часа диалога — у тебя готовый сайт.
+  </p>
+  <p>
+    Слово «вайб» здесь не случайно. Ты задаёшь <strong>вайб</strong> — направление, стиль, идею. Технику делает машина. Ты — режиссёр. AI — съёмочная группа.
+  </p>
+
+  <div class="tip">
+    <div class="tip-icon">!</div>
+    <div>
+      <strong>Ключевая идея</strong>
+      <p>Вайб-кодинг — это не «программирование лайт». Это другая профессия. Ты не учишь синтаксис. Ты учишься чётко формулировать задачу и видеть, что получилось. Это ближе к работе арт-директора, чем разработчика.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s2">
+  <span class="sec-num">02 / контекст</span>
+  <h2>Главный сдвиг 2024–2026</h2>
+  <p>
+    До 2023-го «сделать сайт» = нанять команду. Дизайнер рисует макеты. Верстальщик собирает. Программист подключает базу. Тестировщик ловит баги. Менеджер всех координирует. <strong>Минимум 3–4 человека, 2–4 недели, 100–300 тыс ₽.</strong>
+  </p>
+  <p>
+    В 2024-м появились первые рабочие AI-инструменты: ChatGPT, Claude, потом Cursor, v0.dev. Стало можно собирать простые штуки в одиночку.
+  </p>
+  <p>
+    К 2026-му нейросети научились писать продакшен-код, делать дизайн, подключать базы данных, разворачивать сайты на сервер. <strong>Один человек теперь делает то, что раньше делала команда.</strong> Это уже не теория — это поток.
+  </p>
+  <div class="pull">
+    <span class="pull-mark">"</span>
+    Лендинг, который раньше делали командой 2 недели, я собираю за&nbsp;вечер. И&nbsp;продаю за&nbsp;<mark>те&nbsp;же&nbsp;80&nbsp;000&nbsp;₽</mark>.
+    <span class="pull-sign">— Адам Алиев</span>
+  </div>
+  <p>
+    Это и есть окно возможностей. Через 2–3 года вайб-кодеров будут сотни тысяч. Сейчас — единицы. Чеки дикие, конкуренции почти нет. <strong>Заходить надо сейчас.</strong>
+  </p>
+</section>
+
+<section id="s3">
+  <span class="sec-num">03 / база</span>
+  <h2>Что тебе понадобится</h2>
+  <p>
+    Хорошая новость: почти ничего. <strong>Любой ноутбук с интернетом</strong> — этого хватает. Никакой мощной видеокарты, никакого macOS, ничего такого.
+  </p>
+  <h3>Минимум для старта:</h3>
+  <ul class="check-list">
+    <li>Ноутбук (Windows, Mac, Linux — без разницы)</li>
+    <li>Стабильный интернет</li>
+    <li>Аккаунт ChatGPT или Claude (можно бесплатные тарифы первое время)</li>
+    <li>Браузер. Лучше Chrome или Arc.</li>
+    <li>Часик в день, который ты готов вкладывать</li>
+  </ul>
+  <h3>Чего НЕ нужно:</h3>
+  <ul>
+    <li>Знать программирование. Совсем. Ни Python, ни HTML, ни JavaScript.</li>
+    <li>Иметь высшее образование «в IT»</li>
+    <li>Знать английский на уровне C1 (B1 хватает, нейросети понимают и русский)</li>
+    <li>Покупать курсы по 100 000 ₽ «чтобы вкатиться»</li>
+  </ul>
+
+  <div class="warn">
+    <div class="warn-icon">!</div>
+    <div>
+      <strong>Важно</strong>
+      <p>Если у тебя в голове сидит «я слишком тупой для IT» или «уже поздно начинать» — это самое опасное препятствие. Не код, не инструменты — а внутренний голос. С этим работаем сразу: пробуй, делай, ломай. Никто не родился вайб-кодером.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <span class="sec-num">04 / план</span>
+  <h2>Первые 7 дней — что делать</h2>
+  <p>
+    Не покупай курсы в первый день. Сначала <strong>почувствуй, что вообще происходит</strong>. Вот рабочий план первой недели:
+  </p>
+
+  <h3>День 1 — знакомство</h3>
+  <p>
+    Открой <strong>Claude</strong> (claude.ai) или <strong>ChatGPT</strong> (chat.openai.com). Зарегистрируйся, начни диалог. Поговори с ним как с человеком. Попроси: «расскажи мне про вайб-кодинг как ребёнку, в 3 абзаца». Получи ответ. Уточни. Спорь.
+  </p>
+  <p>
+    Цель — понять, что это не «магия», а собеседник. Очень терпеливый и очень знающий.
+  </p>
+
+  <h3>День 2–3 — первый сайт</h3>
+  <p>
+    Зайди на <a href="https://v0.dev" target="_blank">v0.dev</a> от Vercel. Это AI, который делает веб-страницы. Напиши:
+  </p>
+  <div class="prompt" data-label="промпт">
+    <span class="prompt-arrow">&gt;</span> Сделай лендинг для курса по фотографии. Тёмная тема. Заголовок крупный, фото слева. Кнопка «записаться» салатовая.
+  </div>
+  <p>
+    Получишь страницу за 30 секунд. Поиграй с ней. Меняй промпты, смотри как меняется. Сохрани лучшее.
+  </p>
+
+  <h3>День 4–5 — твой первый промпт для бота</h3>
+  <p>
+    Открой Claude. Попроси: <em>«напиши пошагово, как мне сделать простого Telegram-бота, который отвечает на сообщения. Я не программист, объясняй как новичку. Шаг 1 — как взять ключ у @BotFather. И так далее.»</em>
+  </p>
+  <p>
+    Делай ровно то, что он говорит. Если застрял — спрашивай: <em>«у меня вылезла такая ошибка, что делать?»</em> и копируй ошибку. Claude разбирается лучше любого друга-программиста.
+  </p>
+
+  <h3>День 6–7 — анализ</h3>
+  <p>
+    Спроси себя: <strong>что меня бесит, что не получается, что зажигает?</strong> Запиши это. Если зажигает — двигайся дальше. Если только бесит — может, вайб-кодинг не для тебя, и это нормально.
+  </p>
+  <p>
+    Большинство людей за первую неделю собирают свой первый сайтик и кайфуют. Если ты в этом большинстве — ты на правильном пути.
+  </p>
+</section>
+
+<section id="s5">
+  <span class="sec-num">05 / стек</span>
+  <h2>Стек инструментов 2026</h2>
+  <p>
+    Нейросетей в 2026 году — десятки. Бери не всё, бери нужное. Вот реальный рабочий стек, на котором делается 90% проектов:
+  </p>
+
+  <h3>Чтобы думать и писать промпты</h3>
+  <ul>
+    <li><strong>Claude</strong> (claude.ai) — лучше всех понимает длинные задачи, пишет красивый код. Главный рабочий инструмент.</li>
+    <li><strong>ChatGPT</strong> (chat.openai.com) — универсальный. Хорош для коротких задач, для поиска идей, для генерации текстов.</li>
+  </ul>
+
+  <h3>Чтобы делать сайты</h3>
+  <ul>
+    <li><strong>v0.dev</strong> — генератор веб-страниц от Vercel. Описал — получил готовую страницу в браузере.</li>
+    <li><strong>Cursor</strong> (cursor.com) — редактор кода с AI. Когда уже есть проект и хочется его дорабатывать «по-серьёзному».</li>
+  </ul>
+
+  <h3>Чтобы хранить данные и подключать формы</h3>
+  <ul>
+    <li><strong>Supabase</strong> (supabase.com) — бесплатная база данных + авторизация. Подключается за 10 минут.</li>
+    <li><strong>Vercel</strong> — место, где сайт «живёт» в интернете. Бесплатно, домен дают.</li>
+  </ul>
+
+  <h3>Чтобы автоматизировать процессы</h3>
+  <ul>
+    <li><strong>n8n</strong> (n8n.io) — связывает разные сервисы. AI получил заявку → отправил в Google Sheets → написал клиенту в Telegram.</li>
+    <li><strong>Make</strong> (make.com) — то же самое, но проще на старте. Платный, но первые 1000 операций бесплатно.</li>
+  </ul>
+
+  <h3>Чтобы делать картинки</h3>
+  <ul>
+    <li><strong>Midjourney</strong> — реалистичные и художественные изображения.</li>
+    <li><strong>ChatGPT/Claude</strong> с генерацией картинок — для быстрых иллюстраций.</li>
+  </ul>
+
+  <div class="tip">
+    <div class="tip-icon">+</div>
+    <div>
+      <strong>Совет</strong>
+      <p>Не пытайся освоить все 10 инструментов сразу. Возьми 2: Claude + v0.dev. Сделай на них первый проект. Остальное добавится естественно, по мере того как упрёшься в их пределы.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s6">
+  <span class="sec-num">06 / навык #1</span>
+  <h2>Как разговаривать с AI</h2>
+  <p>
+    Это <strong>главный навык вайб-кодера</strong>. Не «знание промптов», а умение чётко формулировать. Тут принципы — те же, что когда ты ставишь задачу подрядчику.
+  </p>
+
+  <h3>Правило 1. Давай контекст</h3>
+  <p>Не «сделай сайт», а <em>«сделай сайт для онлайн-курса по психологии для женщин 30+, бюджет на рекламу — 50к, цель — собрать заявки на бесплатный вебинар, тон — мягкий, цвета — пастельные»</em>.</p>
+  <p>Чем больше контекста — тем точнее результат. AI не догадывается, что у тебя в голове. Скажи всё.</p>
+
+  <div class="compare">
+    <div class="compare-card bad">
+      <div class="compare-tag">плохо</div>
+      <p>«Напиши пост в инстаграм про мой курс»</p>
+    </div>
+    <div class="compare-card good">
+      <div class="compare-tag">хорошо</div>
+      <p>«Напиши пост в инстаграм для аудитории мам в декрете, про курс по тайм-менеджменту. Длина 600 знаков, мягкий тон, в конце призыв "сохрани себе". Без воды и канцелярита.»</p>
+    </div>
+  </div>
+
+  <h3>Правило 2. Дроби большие задачи</h3>
+  <p>
+    Не проси AI «сделай мне SaaS-сервис». Делай по шагам: <em>«1) спроектируй структуру страниц; 2) сделай главную; 3) добавь форму заявки; 4) подключи базу»</em>. Каждый шаг — отдельный диалог.
+  </p>
+
+  <h3>Правило 3. Показывай примеры</h3>
+  <p>
+    «Сделай лендинг как у Notion, но в моих цветах» — работает в 10 раз лучше, чем «сделай красивый лендинг». AI знает референсы. Используй это.
+  </p>
+
+  <h3>Правило 4. Уточняй и итеррируй</h3>
+  <p>
+    Не пиши «спасибо» и не закрывай окно после первого ответа. Скажи: <em>«хорошо, но кнопка слишком маленькая, сделай больше и поменяй цвет на чёрный»</em>. И ещё: <em>«добавь иконки слева от каждого пункта»</em>. Доводи до того, что нравится.
+  </p>
+
+  <div class="prompt" data-label="шаблон рабочего промпта">
+    <span class="prompt-arrow">&gt;</span> Контекст: я делаю [что и для кого].<br>
+    <span class="prompt-arrow">&gt;</span> Задача: [конкретное действие].<br>
+    <span class="prompt-arrow">&gt;</span> Стиль: [тон, референсы, цвета].<br>
+    <span class="prompt-arrow">&gt;</span> Ограничения: [что нельзя, формат, длина].<br>
+    <span class="prompt-arrow">&gt;</span> Формат ответа: [список, текст, код, таблица].
+  </div>
+</section>
+
+<section id="s7">
+  <span class="sec-num">07 / проект 1</span>
+  <h2>Лендинг за один вечер</h2>
+  <p>
+    Первый коммерческий навык — собирать <strong>продающие лендинги</strong>. Это самый понятный и востребованный продукт. На рынке стоит 30–80 тыс ₽. Делается за 4–8 часов.
+  </p>
+
+  <h3>Что такое продающий лендинг</h3>
+  <p>
+    Это одна длинная страница, которая ведёт человека от «кто это?» до «оставлю заявку». Стандартная структура:
+  </p>
+  <ol>
+    <li>Hero (первый экран) — заголовок + кратко суть + кнопка</li>
+    <li>Боль клиента — что у него болит и почему важно решить</li>
+    <li>Решение — твой продукт, как он закрывает боль</li>
+    <li>Социальные доказательства — отзывы, кейсы, цифры</li>
+    <li>Кто ты — автор, эксперт, команда</li>
+    <li>Программа / содержание / тарифы</li>
+    <li>FAQ — типичные вопросы</li>
+    <li>Финальный CTA — кнопка «записаться»</li>
+  </ol>
+
+  <h3>Как собрать за вечер</h3>
+  <p><strong>Шаг 1.</strong> Возьми бриф у клиента. Что он продаёт? Кому? За сколько? Какие отзывы есть? Какие конкуренты?</p>
+  <p><strong>Шаг 2.</strong> В Claude пиши: <em>«напиши текст лендинга для [продукт] по структуре: hero, боль, решение, отзывы, об авторе, программа, FAQ, CTA. Тон [какой]. Не используй канцелярит»</em>.</p>
+  <p><strong>Шаг 3.</strong> Возьми текст, отполируй. Закинь в <strong>v0.dev</strong>: <em>«сделай лендинг по этому тексту, светлая тема, шрифт Inter, акцентный цвет #d4ff00»</em>.</p>
+  <p><strong>Шаг 4.</strong> Подключи форму через Supabase (или Tally.so — ещё проще). Заявки падают тебе на почту.</p>
+  <p><strong>Шаг 5.</strong> Опубликуй на Vercel. Привяжи домен клиента. Отдай ссылку.</p>
+
+  <div class="tip">
+    <div class="tip-icon">$</div>
+    <div>
+      <strong>Цена на рынке</strong>
+      <p>Простой лендинг — 30 000 ₽. С формой и базой — 50 000 ₽. С премиум-дизайном и анимацией — 80 000 ₽. Срочно за выходные — наценка ×1.5.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s8">
+  <span class="sec-num">08 / проект 2</span>
+  <h2>Второй проект — Telegram-бот</h2>
+  <p>
+    После пары лендингов берись за <strong>ботов</strong>. Это денежнее (50–150 тыс ₽) и заметно полезнее для бизнеса клиента.
+  </p>
+
+  <h3>Какие боты заказывают чаще всего</h3>
+  <ul>
+    <li><strong>Бот-консультант</strong> — отвечает на вопросы клиентов 24/7, отправляет прайс</li>
+    <li><strong>Бот-приёмщик заявок</strong> — собирает контакты, отправляет менеджеру в чат</li>
+    <li><strong>Бот-курс</strong> — выдаёт уроки по графику, проверяет домашки через AI</li>
+    <li><strong>Бот-помощник</strong> — генерирует тексты, идеи, рассылки по запросу</li>
+  </ul>
+
+  <h3>Как сделать первого бота</h3>
+  <p>
+    Открой Claude. Скажи: <em>«я не программист. Помоги мне сделать Telegram-бота на Python, который [что должен делать]. Объясняй каждый шаг как новичку, давай только готовый код, который я могу скопировать»</em>.
+  </p>
+  <p>
+    Дальше — следуй инструкциям. AI скажет, как:
+  </p>
+  <ol>
+    <li>Зарегистрировать бота через @BotFather и взять токен</li>
+    <li>Установить Python (или Node.js — это среда, в которой бот живёт)</li>
+    <li>Скопировать готовый код, заменить токен</li>
+    <li>Запустить на своём компьютере</li>
+    <li>Развернуть в облаке (Railway, Render — бесплатные)</li>
+  </ol>
+
+  <div class="warn">
+    <div class="warn-icon">×</div>
+    <div>
+      <strong>Не пугайся</strong>
+      <p>Слова «Python», «токен», «деплой» звучат страшно только первый раз. Реально каждый шаг — это 3–10 минут. Если застрял — спрашивай у AI «у меня ошибка: [текст]. Что делать?» Он разбирается.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s9">
+  <span class="sec-num">09 / проект 3</span>
+  <h2>Третий уровень — автоматизации (n8n)</h2>
+  <p>
+    Когда освоил лендинги и ботов — берёшь самое жирное: <strong>автоматизации бизнес-процессов</strong>. Это 70–200 тыс ₽ за проект, и клиент готов платить много, потому что ты ему экономишь часы.
+  </p>
+
+  <h3>Что это вообще такое</h3>
+  <p>
+    Автоматизация — это когда сервисы общаются между собой без человека. Примеры:
+  </p>
+  <ul>
+    <li>Клиент пишет боту → AI-анализирует запрос → создаёт запись в CRM → отправляет менеджеру уведомление в чат → менеджеру не надо смотреть в бот</li>
+    <li>На сайт пришла заявка → AI пишет персональное письмо в почту клиенту → добавляет в Google Sheets → ставит задачу в Notion</li>
+    <li>Раз в день AI читает 20 новостных каналов → выбирает релевантное → пишет краткий дайджест → отправляет тебе в Telegram</li>
+  </ul>
+
+  <h3>На чём это делается</h3>
+  <p>
+    Главный инструмент — <strong>n8n</strong>. Это конструктор «потоков»: ты соединяешь блоки (трriggers, AI, базы, мессенджеры) линиями. Никакого кода. Только логика.
+  </p>
+  <p>
+    Альтернатива — <strong>Make.com</strong>. Похоже, но платное (n8n можно поставить себе бесплатно).
+  </p>
+
+  <div class="tip">
+    <div class="tip-icon">★</div>
+    <div>
+      <strong>Лайфхак</strong>
+      <p>Самая денежная связка для одного клиента: <strong>лендинг + бот + автоматизация</strong>. Лендинг приводит заявки → бот их обрабатывает → автоматизация раскидывает по системам. Такой комплект стоит 100–200 тыс ₽ и решает проблему клиента целиком.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s10">
+  <span class="sec-num">10 / деньги</span>
+  <h2>Где брать клиентов</h2>
+  <p>
+    Это второй главный навык после промптов. Хороший вайб-кодер без клиентов — это просто человек, который умеет делать сайты для себя.
+  </p>
+
+  <h3>10 рабочих источников</h3>
+  <ol>
+    <li><strong>Своё окружение.</strong> Напиши пост в личных соц-сетях: «теперь делаю сайты и ботов через AI, кому надо — пишите». Минимум 1–2 заказа из 100 знакомых.</li>
+    <li><strong>Telegram-чаты по нише.</strong> Маркетинг, малый бизнес, инфобиз — везде люди ищут исполнителей.</li>
+    <li><strong>Фриланс-биржи.</strong> Kwork, Upwork (если знаешь английский), FL.ru, Profi.ru.</li>
+    <li><strong>Холодная рассылка.</strong> Пишешь 30 предпринимателям в день в директ: «увидел ваш бизнес, у вас нет лендинга / он устарел / могу собрать за 3 дня за 30к».</li>
+    <li><strong>Реклама в Telegram.</strong> Пара тысяч ₽ на промопост в нишевом канале — 5–10 заявок.</li>
+    <li><strong>Сарафан.</strong> После первого заказа проси отзыв и контакты ещё 2 человек, кому могло бы пригодиться.</li>
+    <li><strong>Контент.</strong> Ведёшь канал/блог про вайб-кодинг — клиенты приходят сами через 3–6 месяцев.</li>
+    <li><strong>Партнёрки.</strong> Договариваешься с маркетологами/таргетологами: они приводят клиентов, ты делаешь продукт, делите оплату.</li>
+    <li><strong>Маркетплейсы услуг.</strong> Workspace.ru, площадки на «Тильда-партнёры», подобные.</li>
+    <li><strong>Тёплые лиды через события.</strong> Митапы, конференции, мероприятия — куда ходят предприниматели.</li>
+  </ol>
+
+  <div class="tip">
+    <div class="tip-icon">!</div>
+    <div>
+      <strong>Самое важное</strong>
+      <p>Первый клиент — самый сложный. Второй и третий приходят через сарафан от первого. Цель — не «найти 100 клиентов», а «закрыть первого». Дальше система раскрутится сама.</p>
+    </div>
+  </div>
+</section>
+
+<section id="s11">
+  <span class="sec-num">11 / прайс</span>
+  <h2>Сколько брать денег</h2>
+  <p>
+    Главная ошибка новичков — <strong>демпинг</strong>. «Я только учусь, возьму за 5 тыс». Так ты заработаешь репутацию дешёвого исполнителя, а потом не сможешь продать тот же продукт за 50.
+  </p>
+  <p>
+    Сразу ставь рыночные цены. Если страшно — давай скидку первым 3 клиентам, но <strong>в прайсе указывай нормальную</strong>.
+  </p>
+
+  <h3>Реальные цены на рынке 2026:</h3>
+  <div class="table">
+    <div class="table-row head">
+      <div>Услуга</div>
+      <div>Время</div>
+      <div>Цена</div>
+    </div>
+    <div class="table-row">
+      <div>Лендинг простой</div>
+      <div>4–6 ч</div>
+      <div><span class="v lime">30 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>Лендинг + база заявок</div>
+      <div>6–10 ч</div>
+      <div><span class="v lime">50 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>Премиум-лендинг с анимацией</div>
+      <div>1–2 дня</div>
+      <div><span class="v lime">80 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>Telegram-бот простой</div>
+      <div>1 день</div>
+      <div><span class="v lime">50 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>Бот с AI и базой данных</div>
+      <div>2–3 дня</div>
+      <div><span class="v lime">100–150 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>Автоматизация в n8n</div>
+      <div>2–5 дней</div>
+      <div><span class="v lime">70–200 тыс ₽</span></div>
+    </div>
+    <div class="table-row">
+      <div>MVP / прототип сервиса</div>
+      <div>1–2 недели</div>
+      <div><span class="v lime">от 100 тыс ₽</span></div>
+    </div>
+  </div>
+
+  <h3>Правила ценообразования</h3>
+  <ul>
+    <li>Бери <strong>предоплату 50%</strong>. Без неё клиент сольётся на середине проекта.</li>
+    <li>Срочность — <strong>+50% к цене</strong>. «За выходные сделать срочно» — это 1.5× прайс.</li>
+    <li>Не оценивай работу по часам. <strong>Цени по результату</strong> — какую проблему ты решаешь и сколько это для клиента стоит.</li>
+    <li>Поднимай цены каждые 5 заказов. Сначала 30к, потом 40к, потом 50к за тот же продукт.</li>
+  </ul>
+</section>
+
+<section id="s12">
+  <span class="sec-num">12 / стоп</span>
+  <h2>Главные ошибки новичков</h2>
+
+  <h3>1. Учиться 6 месяцев, не сделав ни одного проекта</h3>
+  <p>
+    «Сначала разберусь со всеми инструментами, потом начну». Не работает. Бери задачу — делай. Знания приходят через делание, а не через чтение туториалов.
+  </p>
+
+  <h3>2. Делать «для себя» бесплатно вместо того, чтобы продавать</h3>
+  <p>
+    Десятый сайт для портфолио ничего не даст. Один реальный заказ на 30 тыс — даст всё. Опыт, отзыв, деньги, мотивацию.
+  </p>
+
+  <h3>3. Демпить</h3>
+  <p>
+    «Возьму за 5 тыс, чтобы заполучить клиента». Получишь — и попадёшь в нишу «дешёвый исполнитель», откуда не вылезешь. Бери нормально.
+  </p>
+
+  <h3>4. Не показывать процесс</h3>
+  <p>
+    Когда делаешь проект — снимай. Веди соц-сети. Каждый второй заказчик находится не через рекламу, а через «увидел твой пост». Без контента — невидимый.
+  </p>
+
+  <h3>5. Пытаться сделать всё самому без AI</h3>
+  <p>
+    Парадоксально, но новички часто стесняются «слишком сильно опираться» на нейросеть. Зря. Это твой суперсила. Используй на максимум.
+  </p>
+
+  <h3>6. Бросать после первой неудачи</h3>
+  <p>
+    Первый клиент откажет — нормально. Первый сайт развалится — нормально. Первый бот зависнет — нормально. Все вайб-кодеры через это прошли. Это не сигнал «бросать», это сигнал «учиться дальше».
+  </p>
+</section>
+
+<section id="s13">
+  <span class="sec-num">13 / финал</span>
+  <h2>Что дальше</h2>
+  <p>
+    После 3–5 первых проектов появится понимание: <strong>вайб-кодинг — это не временный навык</strong>, а новая нормальность. И тут открываются варианты:
+  </p>
+
+  <ul>
+    <li><strong>Делать продукты на заказ</strong> — стабильно 200–400 тыс в месяц, если ниша выбрана грамотно.</li>
+    <li><strong>Запустить свой SaaS</strong> — собрать AI-сервис за пару недель, монетизировать подпиской. Потолок дохода — без потолка.</li>
+    <li><strong>Уйти в команду как AI-разработчик</strong> — компании ищут таких людей. Зарплаты 200–500 тыс с минимальным опытом.</li>
+    <li><strong>Стать преподавателем / экспертом</strong> — учить других. Если у тебя 10 успешных кейсов, к тебе придут учиться.</li>
+  </ul>
+
+  <p>
+    Это не «потолок» — это разветвление. Большинство нормальных вайб-кодеров миксуют 2–3 формата.
+  </p>
+
+  <div class="pull">
+    <span class="pull-mark">"</span>
+    Через год вайб-кодеров будут сотни тысяч.<br>
+    Сейчас — единицы. <mark>Заходи, пока чеки дикие.</mark>
+    <span class="pull-sign">— Адам Алиев</span>
+  </div>
+</section>
+
+</article>
+
+<!-- CTA FINAL -->
+<div class="cta-final">
+  <h3>Хочешь систему,<br>а не <mark>каша в голове?</mark></h3>
+  <p>Этот гайд — карта. Если нужна пошаговая инструкция с разбором каждого проекта и сопровождением до первого клиента — есть курс.</p>
+  <a href="/ai-maximum/#pricing" class="cta-btn">
+    Посмотреть курс
+    <span class="arr">→</span>
+  </a>
+</div>
+
+</div><!-- /.container -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="container foot-inner">
+    <span>// © Адам Алиев · 2026</span>
+    <a href="/ai-maximum/">← вернуться на главную</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -161,6 +161,18 @@ mark {
   text-transform: lowercase;
 }
 .nav-menu a:hover { color: var(--ink); }
+.nav-guide { display: inline-flex; align-items: center; gap: 6px; }
+.nav-new {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: var(--acid);
+  color: var(--ink);
+  padding: 2px 6px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+}
 .nav-cta {
   display: inline-flex;
   align-items: center;
