@@ -6,8 +6,8 @@ import { motion, useMotionValue, useSpring, AnimatePresence } from 'framer-motio
    ============================================================ */
 
 const tools = [
-  'Claude', 'ChatGPT', 'v0.dev', 'Cursor', 'Supabase',
-  'n8n', 'Make', 'Midjourney', 'Vercel', 'Lovable', 'Bolt',
+  'Claude', 'ChatGPT', 'Cursor', 'Supabase',
+  'n8n', 'Make', 'Midjourney', 'Vercel',
 ];
 
 const programBlocks = [
@@ -558,8 +558,7 @@ function Hero() {
               transition={{ duration: 0.8, delay: 0.95 }}
             >
               <span className="ht-mark">↳</span> с нуля до{' '}
-              <span className="ht-highlight">100k ₽/проект</span>{' '}
-              <span className="ht-mute">за 7 недель</span>
+              <span className="ht-highlight">100k ₽/проект</span>
             </motion.span>
           </h1>
 
@@ -570,7 +569,7 @@ function Hero() {
             transition={{ duration: 0.7, delay: 1.15 }}
           >
             Учись делать сайты, ботов и AI-сервисы через нейросети.
-            Без знания программирования. Без 3 лет в IT.
+            Без знания программирования и 3 лет в IT.
           </motion.p>
 
           <motion.div
@@ -772,34 +771,95 @@ function Problem() {
   return (
     <section className="problem">
       <div className="container">
-        <Eyebrow>// знакомо?</Eyebrow>
-        <Title>
-          Если хотя бы одно <mark>попало в точку</mark> — этот курс для тебя
-        </Title>
+        <motion.div
+          className="news-masthead"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="news-side">№ 01</span>
+          <span className="news-title">AI MAXIMUM POST</span>
+          <span className="news-side news-side-right">2026 · 16 стр.</span>
+        </motion.div>
 
         <motion.div
-          className="problem-text"
+          className="news-meta"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <span>колонка автора</span>
+          <span className="news-dot">·</span>
+          <span>читать ≈ 2 мин</span>
+          <span className="news-dot">·</span>
+          <span>тираж — для своих</span>
+        </motion.div>
+
+        <motion.h2
+          className="news-headline"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <p>Ты слышишь со всех сторон: «AI заменит всех», «успей войти в AI». Тысячи каналов кричат, что это золотая жила.</p>
-          <p>
-            Ты пробовал ChatGPT — он пишет «как-то так».
-            <br />
-            Ты сохранил 50 туториалов — не открыл ни один.
-            <br />
-            Ты думал «надо вкатиться в IT» — но 3 года учиться программированию?
+          Школьники зарабатывают на AI больше, чем ты. <span className="news-headline-em">Хватит догонять.</span>
+        </motion.h2>
+
+        <motion.div
+          className="news-deck"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+        >
+          → если хотя бы одно из ниже попало в точку — этот курс для тебя
+        </motion.div>
+
+        <motion.div
+          className="news-body"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          <p className="news-drop">
+            <span className="dropcap">Т</span>ы слышишь со всех сторон: «AI заменит всех», «успей войти в AI». Тысячи каналов кричат, что это золотая жила. Ты пробовал ChatGPT — он пишет «как-то так». Ты сохранил 50 туториалов — не открыл ни один. Ты думал «надо вкатиться в IT», но три года учиться программированию?
           </p>
-          <p><strong>А время идёт.</strong></p>
-          <ul className="problem-list">
-            <li>Школьники собирают сайты через v0 за час и продают по 50 000 ₽</li>
-            <li>Фрилансеры делают AI-ботов и зарабатывают 100к с одного клиента</li>
-            <li>Ребята твоего возраста запускают свои сервисы за выходные</li>
-          </ul>
-          <p>А ты до сих пор думаешь, что для этого нужен код. Не понимаешь с чего начать. Боишься, что уже поздно.</p>
-          <p><strong>Это нормально. Я через это прошёл.</strong></p>
+          <p>
+            А время идёт. Каждый день кто-то закрывает первого клиента, пока ты гуглишь «что такое нейросеть». И этот кто-то — не сеньор из Яндекса, а 19-летний на удалёнке.
+          </p>
+          <p>
+            Школьники собирают сайты через AI за час и продают по 50 000 ₽. Фрилансеры делают AI-ботов и поднимают по 100 000 ₽ с одного клиента. Ребята твоего возраста запускают свои сервисы за выходные.
+          </p>
+          <p>
+            А ты до сих пор думаешь, что для этого нужен код. Не понимаешь, с чего начать. Боишься, что уже поздно. Это нормально. Я через это прошёл.
+          </p>
+        </motion.div>
+
+        <motion.aside
+          className="news-pull"
+          initial={{ opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <span className="news-pull-mark">"</span>
+          Лендинг, который раньше делали&nbsp;командой две недели, я&nbsp;собираю за&nbsp;вечер. И&nbsp;продаю за&nbsp;<mark>те&nbsp;же&nbsp;80&nbsp;000&nbsp;₽</mark>.
+          <span className="news-pull-sign">— Адам Алиев</span>
+        </motion.aside>
+
+        <motion.div
+          className="news-foot"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <span>конец колонки →</span>
+          <span className="news-foot-line" />
+          <span>продолжение на стр. 02</span>
         </motion.div>
       </div>
     </section>
@@ -816,7 +876,7 @@ function About() {
       <div className="container">
         <Eyebrow>// об авторе</Eyebrow>
         <Title>
-          Привет, я <mark>Адам Алиев</mark>
+          Я, <mark>Адам Алиев</mark>
         </Title>
 
         <div className="about-grid">
