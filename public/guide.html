@@ -235,33 +235,61 @@ ol li::before{
   overflow:hidden;background:var(--paper);
 }
 .table-row{
-  display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;padding:16px 22px;
+  display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,0.9fr) minmax(0,1.1fr);
+  gap:18px;padding:16px 22px;align-items:center;
   border-bottom:1px solid var(--line);font-family:var(--mono);font-size:14px;
 }
+.table-row > div{min-width:0}
 .table-row:last-child{border-bottom:none}
 .table-row.head{background:var(--ink);color:var(--bg);font-size:11px;
-  letter-spacing:.1em;text-transform:uppercase;}
-.table-row .v{font-weight:700}
+  letter-spacing:.1em;text-transform:uppercase;font-weight:600;}
+.table-row .v{font-weight:700;display:inline-block;}
 .table-row .v.lime{background:var(--acid);color:var(--ink);
-  padding:2px 8px;border-radius:4px;width:fit-content}
-@media(max-width:600px){.table-row{grid-template-columns:1fr;gap:6px;padding:14px 18px}.table-row.head{display:none}.table-row>div{display:flex;justify-content:space-between;font-size:13px}}
+  padding:3px 10px;border-radius:4px;white-space:nowrap;}
+@media(max-width:760px){
+  .table-row{grid-template-columns:1fr;gap:8px;padding:16px 18px}
+  .table-row.head{display:none}
+  .table-row>div{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;gap:12px}
+  .table-row>div::before{
+    content:attr(data-label);font-family:var(--mono);font-size:11px;
+    color:var(--ink-mute);text-transform:lowercase;font-weight:500;letter-spacing:.05em;
+  }
+}
 
 /* ============ CTA FINAL ============ */
 .cta-final{
   margin:60px 0 0;padding:48px;background:var(--ink);color:var(--bg);
   border-radius:22px;text-align:center;position:relative;overflow:hidden;
 }
+.cta-tag{
+  display:inline-block;font-family:var(--mono);font-size:11px;
+  color:var(--acid);letter-spacing:.05em;margin-bottom:18px;text-transform:lowercase;
+}
 .cta-final h3{
   font-family:var(--mono);font-size:clamp(28px,4vw,44px);font-weight:800;
-  line-height:1.05;letter-spacing:-.035em;color:var(--bg);margin-bottom:18px;
+  line-height:1.05;letter-spacing:-.035em;color:var(--bg);margin-bottom:20px;
   text-transform:uppercase;
 }
 .cta-final h3 mark{background:var(--acid);color:var(--ink);padding:0 .12em;border-radius:5px}
-.cta-final p{color:rgba(255,255,255,.7);margin:0 auto 28px;max-width:480px;font-size:16px}
+.cta-final p{color:rgba(255,255,255,.7);margin:0 auto 24px;max-width:520px;font-size:16px;line-height:1.6}
+.cta-final p strong{color:var(--bg);background:rgba(212,255,0,.18);padding:0 4px;border-radius:3px}
+.cta-bullets{
+  list-style:none;display:inline-flex;flex-direction:column;
+  gap:10px;margin:0 auto 32px;text-align:left;padding:0;
+}
+.cta-bullets li{
+  font-family:var(--mono);font-size:14px;color:rgba(255,255,255,.85);
+  padding-left:24px;position:relative;
+}
+.cta-bullets li::before{
+  content:'✓';position:absolute;left:0;color:var(--ink);background:var(--acid);
+  width:16px;height:16px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;border-radius:50%;
+}
 .cta-btn{
-  display:inline-flex;align-items:center;gap:10px;padding:18px 30px;
+  display:inline-flex;align-items:center;gap:10px;padding:20px 36px;
   background:var(--acid);color:var(--ink);text-decoration:none;
-  font-family:var(--mono);font-size:15px;font-weight:700;
+  font-family:var(--mono);font-size:16px;font-weight:800;
   border-radius:100px;border:1.5px solid var(--acid);
   transition:all .25s;
 }
@@ -269,6 +297,104 @@ ol li::before{
   transform:translate(-2px,-2px);box-shadow:6px 6px 0 0 var(--acid)}
 .cta-btn .arr{transition:transform .3s}
 .cta-btn:hover .arr{transform:translateX(4px)}
+.cta-note{margin-top:14px;font-family:var(--mono);font-size:12px;color:rgba(255,255,255,.45)}
+
+/* ============ MIDDLE CTA — native, между разделами ============ */
+.mid-cta{
+  margin:32px 0;padding:28px 32px;
+  background:var(--paper);border:1.5px solid var(--ink);border-radius:18px;
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;
+  box-shadow:6px 6px 0 0 var(--acid);position:relative;
+}
+.mid-cta::before{
+  content:'★ HOT';position:absolute;top:-12px;left:24px;
+  background:var(--acid);color:var(--ink);font-family:var(--mono);
+  font-size:10px;font-weight:800;letter-spacing:.1em;
+  padding:4px 10px;border:1.5px solid var(--ink);border-radius:100px;
+}
+.mid-cta-left h4{
+  font-family:var(--mono);font-size:20px;font-weight:800;
+  letter-spacing:-.02em;margin-bottom:8px;text-transform:uppercase;line-height:1.2;
+}
+.mid-cta-left p{
+  font-family:var(--sans);font-size:14px;line-height:1.5;
+  color:var(--ink-dim);margin:0;max-width:480px;
+}
+.mid-cta-btn{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 22px;
+  background:var(--ink);color:var(--bg);text-decoration:none;
+  font-family:var(--mono);font-size:13px;font-weight:700;
+  border-radius:100px;border:1.5px solid var(--ink);
+  white-space:nowrap;transition:all .25s;
+}
+.mid-cta-btn:hover{background:var(--acid);color:var(--ink)}
+.mid-cta-btn .arr{transition:transform .3s}
+.mid-cta-btn:hover .arr{transform:translateX(3px)}
+@media(max-width:640px){
+  .mid-cta{grid-template-columns:1fr;text-align:left;padding:24px}
+  .mid-cta-btn{justify-content:center}
+}
+
+/* ============ POPUP ============ */
+.popup-overlay{
+  position:fixed;inset:0;background:rgba(10,10,10,.72);
+  z-index:1000;display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;visibility:hidden;
+  transition:opacity .35s var(--ease), visibility .35s;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.popup-overlay.open{opacity:1;visibility:visible}
+.popup{
+  background:var(--paper);border:1.5px solid var(--ink);border-radius:22px;
+  padding:40px;max-width:520px;width:100%;position:relative;
+  box-shadow:8px 8px 0 0 var(--acid);
+  transform:translateY(20px) scale(.96);
+  transition:transform .35s var(--ease);
+}
+.popup-overlay.open .popup{transform:translateY(0) scale(1)}
+.popup-close{
+  position:absolute;top:14px;right:14px;
+  width:36px;height:36px;border:1.5px solid var(--ink);border-radius:50%;
+  background:var(--paper);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:18px;line-height:1;
+  transition:background .2s,transform .2s var(--ease);
+}
+.popup-close:hover{background:var(--acid);transform:rotate(90deg)}
+.popup-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  color:var(--ink-dim);letter-spacing:.05em;margin-bottom:18px;text-transform:lowercase;
+}
+.popup-tag::before{
+  content:'';width:8px;height:8px;background:var(--acid);
+  border-radius:50%;animation:live 1.8s infinite;
+}
+.popup h4{
+  font-family:var(--mono);font-size:clamp(24px,3.5vw,32px);
+  font-weight:800;letter-spacing:-.03em;line-height:1.1;
+  margin-bottom:16px;text-transform:uppercase;
+}
+.popup h4 mark{background:var(--acid);color:var(--ink);padding:0 .1em;border-radius:5px}
+.popup p{
+  font-family:var(--sans);font-size:15px;line-height:1.6;
+  color:var(--ink-dim);margin:0 0 24px;
+}
+.popup-actions{display:flex;gap:10px;flex-wrap:wrap}
+.popup-cta{
+  flex:1;min-width:180px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 22px;background:var(--ink);color:var(--bg);text-decoration:none;
+  font-family:var(--mono);font-size:14px;font-weight:700;
+  border-radius:100px;border:1.5px solid var(--ink);
+  transition:all .25s;
+}
+.popup-cta:hover{background:var(--acid);color:var(--ink)}
+.popup-skip{
+  padding:16px 22px;font-family:var(--mono);font-size:13px;color:var(--ink-mute);
+  background:transparent;border:1px solid var(--line-2);border-radius:100px;cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.popup-skip:hover{color:var(--ink);border-color:var(--ink)}
 
 /* ============ FOOTER ============ */
 footer{
@@ -295,7 +421,7 @@ footer{
     <a href="/ai-maximum/" class="logo">
       <span class="logo-bracket">[</span>ai/max<span class="logo-bracket">]</span>
     </a>
-    <a href="/ai-maximum/" class="nav-back">← на главную</a>
+    <a href="/ai-maximum/#pricing" class="nav-back">тарифы курса →</a>
   </div>
 </nav>
 
@@ -387,7 +513,7 @@ footer{
     <span class="pull-sign">— Адам Алиев</span>
   </div>
   <p>
-    Это и есть окно возможностей. Через 2–3 года вайб-кодеров будут сотни тысяч. Сейчас — единицы. Чеки дикие, конкуренции почти нет. <strong>Заходить надо сейчас.</strong>
+    Это и есть окно возможностей. Через 2–3 года вайб-кодеров будут сотни тысяч. Сейчас — единицы. Чеки дикие, конкуренции почти нет.
   </p>
 </section>
 
@@ -543,7 +669,7 @@ footer{
     «Сделай лендинг как у Notion, но в моих цветах» — работает в 10 раз лучше, чем «сделай красивый лендинг». AI знает референсы. Используй это.
   </p>
 
-  <h3>Правило 4. Уточняй и итеррируй</h3>
+  <h3>Правило 4. Уточняй и итерируй</h3>
   <p>
     Не пиши «спасибо» и не закрывай окно после первого ответа. Скажи: <em>«хорошо, но кнопка слишком маленькая, сделай больше и поменяй цвет на чёрный»</em>. И ещё: <em>«добавь иконки слева от каждого пункта»</em>. Доводи до того, что нравится.
   </p>
@@ -590,10 +716,25 @@ footer{
     <div class="tip-icon">$</div>
     <div>
       <strong>Цена на рынке</strong>
-      <p>Простой лендинг — 30 000 ₽. С формой и базой — 50 000 ₽. С премиум-дизайном и анимацией — 80 000 ₽. Срочно за выходные — наценка ×1.5.</p>
+      <p>Простой лендинг — от 40 000 ₽. С формой и базой — 50 000 ₽. С премиум-дизайном и анимацией — 80–120 000 ₽. Срочно за выходные — наценка ×1.5.</p>
     </div>
   </div>
 </section>
+
+<!-- ============ NATIVE MIDDLE CTA ============ -->
+<aside class="mid-cta">
+  <div class="mid-cta-left">
+    <h4>Хочешь не читать, а делать?</h4>
+    <p>
+      На курсе ты собираешь лендинг под руководством — с шаблонами,
+      разбором твоих ошибок и помощью с публикацией на домене клиента.
+    </p>
+  </div>
+  <a href="/ai-maximum/#pricing" class="mid-cta-btn">
+    Тарифы курса
+    <span class="arr">→</span>
+  </a>
+</aside>
 
 <section id="s8">
   <span class="sec-num">08 / проект 2</span>
@@ -653,7 +794,7 @@ footer{
 
   <h3>На чём это делается</h3>
   <p>
-    Главный инструмент — <strong>n8n</strong>. Это конструктор «потоков»: ты соединяешь блоки (трriggers, AI, базы, мессенджеры) линиями. Никакого кода. Только логика.
+    Главный инструмент — <strong>n8n</strong>. Это конструктор «потоков»: ты соединяешь блоки (триггеры, AI, базы, мессенджеры) линиями. Никакого кода. Только логика.
   </p>
   <p>
     Альтернатива — <strong>Make.com</strong>. Похоже, но платное (n8n можно поставить себе бесплатно).
@@ -716,39 +857,39 @@ footer{
       <div>Цена</div>
     </div>
     <div class="table-row">
-      <div>Лендинг простой</div>
-      <div>4–6 ч</div>
-      <div><span class="v lime">30 тыс ₽</span></div>
+      <div data-label="Услуга">Лендинг простой</div>
+      <div data-label="Время">4–6 ч</div>
+      <div data-label="Цена"><span class="v lime">от 40 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>Лендинг + база заявок</div>
-      <div>6–10 ч</div>
-      <div><span class="v lime">50 тыс ₽</span></div>
+      <div data-label="Услуга">Лендинг + база заявок</div>
+      <div data-label="Время">6–10 ч</div>
+      <div data-label="Цена"><span class="v lime">от 50 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>Премиум-лендинг с анимацией</div>
-      <div>1–2 дня</div>
-      <div><span class="v lime">80 тыс ₽</span></div>
+      <div data-label="Услуга">Премиум-лендинг с анимацией</div>
+      <div data-label="Время">1–2 дня</div>
+      <div data-label="Цена"><span class="v lime">80–120 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>Telegram-бот простой</div>
-      <div>1 день</div>
-      <div><span class="v lime">50 тыс ₽</span></div>
+      <div data-label="Услуга">Telegram-бот простой</div>
+      <div data-label="Время">1 день</div>
+      <div data-label="Цена"><span class="v lime">от 50 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>Бот с AI и базой данных</div>
-      <div>2–3 дня</div>
-      <div><span class="v lime">100–150 тыс ₽</span></div>
+      <div data-label="Услуга">Бот с AI и базой данных</div>
+      <div data-label="Время">2–3 дня</div>
+      <div data-label="Цена"><span class="v lime">100–150 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>Автоматизация в n8n</div>
-      <div>2–5 дней</div>
-      <div><span class="v lime">70–200 тыс ₽</span></div>
+      <div data-label="Услуга">Автоматизация в n8n</div>
+      <div data-label="Время">2–5 дней</div>
+      <div data-label="Цена"><span class="v lime">90–200 тыс ₽</span></div>
     </div>
     <div class="table-row">
-      <div>MVP / прототип сервиса</div>
-      <div>1–2 недели</div>
-      <div><span class="v lime">от 100 тыс ₽</span></div>
+      <div data-label="Услуга">MVP / прототип сервиса</div>
+      <div data-label="Время">1–2 недели</div>
+      <div data-label="Цена"><span class="v lime">150–300 тыс ₽</span></div>
     </div>
   </div>
 
@@ -826,12 +967,25 @@ footer{
 
 <!-- CTA FINAL -->
 <div class="cta-final">
-  <h3>Хочешь систему,<br>а не <mark>каша в голове?</mark></h3>
-  <p>Этот гайд — карта. Если нужна пошаговая инструкция с разбором каждого проекта и сопровождением до первого клиента — есть курс.</p>
+  <span class="cta-tag">// дочитал? значит ты серьёзно</span>
+  <h3>Гайд — это карта.<br>Курс — <mark>проводник.</mark></h3>
+  <p>
+    Самому пройти можно. Но <strong>с гайдом в руках </strong>
+    ты потратишь 3–6 месяцев на пробы и ошибки.
+    С курсом — соберёшь <strong>4 коммерческих проекта</strong> и закроешь
+    первого клиента уже в первый месяц.
+  </p>
+  <ul class="cta-bullets">
+    <li>Разбор каждого твоего проекта</li>
+    <li>Шаблоны лендингов, КП, договоров</li>
+    <li>Помощь с поиском первых клиентов</li>
+    <li>3 тарифа — выбирай по бюджету</li>
+  </ul>
   <a href="/ai-maximum/#pricing" class="cta-btn">
-    Посмотреть курс
+    Выбрать тариф
     <span class="arr">→</span>
   </a>
+  <div class="cta-note">от 9 990 ₽ · оплата картой</div>
 </div>
 
 </div><!-- /.container -->
@@ -843,6 +997,75 @@ footer{
     <a href="/ai-maximum/">← вернуться на главную</a>
   </div>
 </footer>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="popup">
+    <button class="popup-close" id="popupClose" aria-label="закрыть">×</button>
+    <div class="popup-tag">// зацепило?</div>
+    <h4>Хочешь делать руками, а не <mark>читать в кровати?</mark></h4>
+    <p>
+      Курс «AI MAXIMUM» — пошаговая система с разбором каждого твоего проекта.
+      4 коммерческих кейса в портфолио, поддержка до первого клиента.
+      3 тарифа от 9 990 ₽.
+    </p>
+    <div class="popup-actions">
+      <a href="/ai-maximum/#pricing" class="popup-cta">
+        Посмотреть тарифы
+        <span class="arr">→</span>
+      </a>
+      <button class="popup-skip" id="popupSkip" type="button">позже</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var popup = document.getElementById('popup');
+  var closeBtn = document.getElementById('popupClose');
+  var skipBtn = document.getElementById('popupSkip');
+  if (!popup) return;
+
+  var DISMISS_KEY = 'aimax_guide_popup_dismissed';
+  var shown = false;
+
+  function show() {
+    if (shown) return;
+    if (sessionStorage.getItem(DISMISS_KEY) === '1') return;
+    shown = true;
+    popup.classList.add('open');
+    popup.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function hide() {
+    popup.classList.remove('open');
+    popup.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+    sessionStorage.setItem(DISMISS_KEY, '1');
+  }
+
+  closeBtn.addEventListener('click', hide);
+  skipBtn.addEventListener('click', hide);
+  popup.addEventListener('click', function (e) { if (e.target === popup) hide(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && popup.classList.contains('open')) hide();
+  });
+
+  // Trigger: scroll past ~60% (после раздела 09 — об автоматизациях)
+  function onScroll() {
+    var doc = document.documentElement;
+    var scrolled = (window.scrollY + window.innerHeight) / doc.scrollHeight;
+    if (scrolled > 0.6) {
+      show();
+      window.removeEventListener('scroll', onScroll);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Fallback: показать через 80 сек, даже если медленно скроллит
+  setTimeout(show, 80000);
+})();
+</script>
 
 </body>
 </html>
