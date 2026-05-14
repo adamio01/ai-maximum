@@ -26,42 +26,42 @@ const programBlocks = [
   },
   {
     num: '02',
-    title: 'Вайб-кодинг: сайты',
-    sub: 'Главный блок — собираешь лендинги через AI',
+    title: 'Сайты через AI',
+    sub: 'Главный блок — собираешь продающие сайты через AI',
     lessons: '8 уроков',
     items: [
-      'v0.dev, Cursor, Claude Code',
-      'Базы данных, домен, деплой',
-      'Дизайн без AI-привкуса',
-      'Продажа за 30–80 тыс ₽',
+      'Главные AI-инструменты для сайтов в 2026',
+      'Подключаешь форму заявок и базу клиентов',
+      'Публикуешь сайт на своём домене',
+      'Делаешь дизайн, который не выдаёт AI',
     ],
-    result: 'Лендинг на твоём домене',
+    result: 'Готовый сайт на твоём домене',
   },
   {
     num: '03',
-    title: 'Боты и автоматизации',
-    sub: 'Самая доходная ниша вайб-кодинга',
+    title: 'Боты и автоматизация',
+    sub: 'Самая доходная ниша. Боты для бизнеса от 50 тыс ₽',
     lessons: '6 уроков',
     items: [
-      'Telegram-боты с AI',
-      'n8n, Make — автоматизация без кода',
-      'AI-агенты, работающие сами',
-      'Продажа за 70–200 тыс ₽',
+      'Telegram-боты, которые отвечают как человек',
+      'AI-помощники, делающие рутину сами',
+      'Связываешь сервисы между собой без кода',
+      'Закрываешь заявки клиентов 24/7 без участия',
     ],
-    result: 'Бот и автоматизация в портфолио',
+    result: 'Свой бот и автоматизация в портфолио',
   },
   {
     num: '04',
-    title: 'Свои сервисы и MVP',
-    sub: 'Запускаешь свой цифровой продукт за выходные',
+    title: 'Свои AI-сервисы',
+    sub: 'Запускаешь собственный цифровой продукт за выходные',
     lessons: '5 уроков',
     items: [
-      'Своя SaaS-идея через AI',
-      'MVP за 2 дня',
-      'Кастомные GPT и Claude Projects',
-      'Платные AI-боты и подписки',
+      'Идея → рабочий прототип за 2 дня',
+      'Свои персональные AI-помощники',
+      'Платные сервисы с подпиской',
+      'Как тестировать продукт на реальных людях',
     ],
-    result: 'Рабочий прототип сервиса',
+    result: 'Рабочий прототип своего сервиса',
   },
   {
     num: '05',
@@ -82,10 +82,10 @@ const programBlocks = [
 ];
 
 const portfolio = [
-  { num: '01', title: 'Лендинг через AI', desc: 'Лендинг с дизайном, текстами, формой и базой данных за вечер. v0.dev + Supabase. Свой домен.', price: '30–80 тыс ₽' },
-  { num: '02', title: 'Telegram-бот с AI', desc: 'AI-бот, который консультирует клиентов и принимает заявки 24/7 без твоего участия.', price: '50–150 тыс ₽' },
-  { num: '03', title: 'Автоматизация бизнеса', desc: 'AI + Telegram + Google Sheets/CRM через n8n. Закрываешь рутину клиента.', price: '70–200 тыс ₽' },
-  { num: '04', title: 'Свой MVP / сервис', desc: 'Прототип цифрового продукта за выходные. Показывать инвесторам или продавать.', price: '150–300 тыс ₽' },
+  { num: '01', title: 'Сайт через AI', desc: 'Сайт с дизайном, текстами, формой заявок и базой клиентов за вечер. Публикуешь на твоём домене — отдаёшь заказчику готовым.', price: '40–80 тыс ₽' },
+  { num: '02', title: 'Telegram-бот с AI', desc: 'Бот, который консультирует клиентов и принимает заявки 24/7 как настоящий менеджер. Без твоего участия.', price: '50–150 тыс ₽' },
+  { num: '03', title: 'Автоматизация бизнеса', desc: 'Связываешь Telegram, Google-таблицы и CRM. AI обрабатывает заявки сам — клиент экономит часы работы.', price: '90–200 тыс ₽' },
+  { num: '04', title: 'Свой цифровой сервис', desc: 'Прототип собственного продукта за выходные. Можно показывать инвесторам или сразу запускать в продажу.', price: '150–300 тыс ₽' },
 ];
 
 /* SVG sticker-style icons */
@@ -1184,35 +1184,95 @@ function Portfolio() {
    WHO
    ============================================================ */
 
-function Who() {
+function Fit() {
+  const yes = [
+    'Никогда не программировал — и не собираешься',
+    'Хочешь зарабатывать на цифровых продуктах',
+    'Готов вложить 1–2 часа в день первый месяц',
+    'Не боишься переспрашивать и пробовать',
+    'Любопытно — что вообще можно делать с AI',
+  ];
+  const no = [
+    'Ищешь «волшебную кнопку», чтобы AI делал всё сам',
+    'Хочешь быстрых денег без вложения времени',
+    'Не готов писать вопросы и разбираться',
+    'Уверен, что «уже поздно», и не хочешь пробовать',
+  ];
+  const reasons = [
+    { k: 'Не нужен опыт.', v: 'Программа с нуля — для тех, кто никогда не открывал код.' },
+    { k: 'Ты не один.', v: 'В тарифе «С куратором» — общий чат и созвоны. Зависнешь — вытащим.' },
+    { k: 'Маленькие шаги.', v: 'Уроки по 15–25 минут. Каждый — конкретный навык, а не теория.' },
+    { k: 'Можно перепроходить.', v: 'Доступ остаётся с тобой. Не понял — вернёшься позже.' },
+  ];
   return (
-    <section className="who">
+    <section className="fit">
       <div className="container">
-        <Eyebrow>// для кого</Eyebrow>
+        <Eyebrow>// для тебя ли это</Eyebrow>
         <Title>
-          Курс точно <mark>для тебя</mark>, если ты:
+          Подойдёт ли <mark>тебе</mark> этот курс?
         </Title>
 
-        <div className="who-grid">
-          {whoFor.map((w, i) => (
-            <motion.div
-              key={w.title}
-              className="who-card interactive"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
-              whileHover={{ y: -4 }}
-            >
-              <div className="who-icon">
-                <Icon name={w.icon} />
-              </div>
-              <h3 className="who-title">{w.title}</h3>
-              <p className="who-desc">{w.desc}</p>
-              <div className="who-corner">0{i + 1}</div>
-            </motion.div>
-          ))}
+        <div className="fit-grid">
+          <motion.div
+            className="fit-card fit-yes"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="fit-tag">✓ ТОЧНО ПОДОЙДЁТ, ЕСЛИ:</div>
+            <ul>
+              {yes.map((t, i) => <li key={i}>{t}</li>)}
+            </ul>
+          </motion.div>
+          <motion.div
+            className="fit-card fit-no"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <div className="fit-tag">× ЛУЧШЕ ПРОЙТИ МИМО, ЕСЛИ:</div>
+            <ul>
+              {no.map((t, i) => <li key={i}>{t}</li>)}
+            </ul>
+          </motion.div>
         </div>
+
+        <motion.div
+          className="fit-divider"
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <span>↓</span>
+        </motion.div>
+
+        <motion.div
+          className="fit-promise"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.7 }}
+        >
+          <h3>А у меня получится?</h3>
+          <p className="fit-answer">
+            Короткий ответ: <mark>да, если будешь делать.</mark>
+          </p>
+          <p className="fit-body">
+            Тебе не нужен код, опыт и техническое образование. Программа разбита
+            на маленькие шаги — от простого к сложному. Не понял — спрашиваешь,
+            объясняем заново. У учеников прошлых потоков средний срок до первой
+            продажи — около 3 недель после старта.
+          </p>
+          <ul className="fit-points">
+            {reasons.map((r, i) => (
+              <li key={i}><strong>{r.k}</strong> {r.v}</li>
+            ))}
+          </ul>
+          <div className="fit-signature">— Адам Алиев</div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1444,7 +1504,7 @@ export default function App() {
         <Income />
         <Program />
         <Portfolio />
-        <Who />
+        <Fit />
         <Pricing />
         <FAQ />
         <Final />
