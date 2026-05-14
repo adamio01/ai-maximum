@@ -1360,6 +1360,13 @@ function Pricing() {
                   <Icon name="arrow" />
                 </a>
               </Magnetic>
+              <button
+                type="button"
+                className="price-installment"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-installment', { detail: p }))}
+              >
+                Хочу в рассрочку <span className="arr">→</span>
+              </button>
               {p.spots && <div className="price-spots">// {p.spots}</div>}
             </motion.div>
           ))}
@@ -1499,6 +1506,195 @@ function Footer() {
 }
 
 /* ============================================================
+   INSTALLMENT MODAL — рассрочка 50/50
+   ============================================================ */
+
+function formatPrice(n) {
+  return n.toLocaleString('ru-RU').replace(/,/g, ' ');
+}
+
+function InstallmentModal() {
+  const [tier, setTier] = useState(null);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [tg, setTg] = useState('');
+  const [status, setStatus] = useState('idle');
+
+  useEffect(() => {
+    const open = (e) => {
+      setTier(e.detail);
+      setStatus('idle');
+      setName(''); setPhone(''); setTg('');
+      document.documentElement.style.overflow = 'hidden';
+    };
+    window.addEventListener('open-installment', open);
+    return () => window.removeEventListener('open-installment', open);
+  }, []);
+
+  const close = () => {
+    setTier(null);
+    document.documentElement.style.overflow = '';
+  };
+
+  if (!tier) return null;
+
+  const totalNum = parseInt(tier.price.replace(/\D/g, ''), 10);
+  const half = Math.ceil(totalNum / 2);
+
+  async function submit(e) {
+    e.preventDefault();
+    if (!name.trim() || !phone.trim()) return;
+    setStatus('sending');
+
+    const TG_TOKEN = import.meta.env.VITE_TG_BOT_TOKEN || '';
+    const TG_CHAT = import.meta.env.VITE_TG_CHAT_ID || '';
+
+    const text =
+      `🟢 ЗАЯВКА НА РАССРОЧКУ\n\n` +
+      `Тариф: ${tier.name}\n` +
+      `Сумма: ${formatPrice(totalNum)} ₽\n` +
+      `Деление: ${formatPrice(half)} + ${formatPrice(half)} ₽ (50/50)\n\n` +
+      `Имя: ${name}\n` +
+      `Телефон: ${phone}\n` +
+      `Telegram: ${tg || '—'}\n\n` +
+      `Время: ${new Date().toLocaleString('ru-RU')}`;
+
+    try {
+      if (!TG_TOKEN || !TG_CHAT) throw new Error('not_configured');
+      const res = await fetch(
+        `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ chat_id: TG_CHAT, text }),
+        }
+      );
+      if (!res.ok) throw new Error('telegram_error');
+      setStatus('success');
+    } catch (err) {
+      setStatus('error');
+    }
+  }
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="modal-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={(e) => { if (e.target === e.currentTarget) close(); }}
+      >
+        <motion.div
+          className="modal"
+          initial={{ scale: 0.94, y: 30, opacity: 0 }}
+          animate={{ scale: 1, y: 0, opacity: 1 }}
+          exit={{ scale: 0.94, y: 20, opacity: 0 }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <button className="modal-close interactive" onClick={close} aria-label="закрыть">×</button>
+
+          {status !== 'success' ? (
+            <>
+              <div className="modal-tag">// рассрочка без банка и процентов</div>
+              <h3 className="modal-title">
+                Платишь <mark>50% сейчас</mark>,<br />
+                остальное — в течение 2 недель
+              </h3>
+              <p className="modal-desc">
+                Внутренняя рассрочка от Адама. Без банков, договоров и процентов —
+                просто разбиваем платёж на 2 части.
+              </p>
+
+              <div className="modal-split">
+                <div className="split-row">
+                  <div className="split-tier">{tier.name}</div>
+                  <div className="split-total">{formatPrice(totalNum)} ₽</div>
+                </div>
+                <div className="split-eq">=</div>
+                <div className="split-parts">
+                  <div className="split-part">
+                    <div className="split-part-label">// сейчас</div>
+                    <div className="split-part-val">{formatPrice(half)} ₽</div>
+                  </div>
+                  <div className="split-plus">+</div>
+                  <div className="split-part">
+                    <div className="split-part-label">// до 2 недель</div>
+                    <div className="split-part-val">{formatPrice(half)} ₽</div>
+                  </div>
+                </div>
+              </div>
+
+              <form className="modal-form" onSubmit={submit}>
+                <div className="form-row">
+                  <label>Имя</label>
+                  <input
+                    type="text" required
+                    placeholder="Как тебя зовут"
+                    value={name} onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="form-row">
+                  <label>Номер телефона</label>
+                  <input
+                    type="tel" required
+                    placeholder="+7 ___ ___ __ __"
+                    value={phone} onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+                <div className="form-row">
+                  <label>Telegram <span className="form-opt">(необязательно)</span></label>
+                  <input
+                    type="text"
+                    placeholder="@username или ссылка"
+                    value={tg} onChange={(e) => setTg(e.target.value)}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="modal-submit interactive"
+                  disabled={status === 'sending'}
+                >
+                  <span>{status === 'sending' ? 'отправляем…' : 'Оставить заявку'}</span>
+                  <Icon name="arrow" />
+                </button>
+
+                {status === 'error' && (
+                  <div className="modal-error">
+                    Что-то пошло не так. Напиши напрямую в Telegram:{' '}
+                    <a href="https://t.me/adamioo" target="_blank" rel="noopener">@adamioo</a>
+                  </div>
+                )}
+
+                <div className="modal-note">
+                  Нажимая на кнопку, ты соглашаешься на обработку контактных данных.
+                  Свяжемся в течение 1–2 часов в рабочее время.
+                </div>
+              </form>
+            </>
+          ) : (
+            <div className="modal-success">
+              <div className="success-mark">✓</div>
+              <h3>Заявка отправлена</h3>
+              <p>
+                Адам свяжется с тобой в ближайшее время по номеру{' '}
+                <strong>{phone}</strong>. Обычно — в течение часа в рабочее время.
+              </p>
+              <button className="modal-submit" onClick={close}>
+                <span>Понятно</span>
+                <Icon name="arrow" />
+              </button>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ============================================================
    VERSION BADGE
    ============================================================ */
 
@@ -1522,6 +1718,7 @@ export default function App() {
     <>
       <Cursor />
       <VersionBadge />
+      <InstallmentModal />
       <Nav />
       <main>
         <Hero />
